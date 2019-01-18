@@ -1,6 +1,5 @@
 import 'package:simple_debt_manager/main.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:simple_debt_manager/screens/main_screen.dart';
 
 void main() {
   testWidgets("App startup: find appbar text", (WidgetTester tester) async {
