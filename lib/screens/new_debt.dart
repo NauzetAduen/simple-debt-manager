@@ -45,8 +45,8 @@ class _NewDebtState extends State<NewDebt> {
                         "Create",
                         style: TextStyle(fontSize: 25.0),
                       ),
-                      color: Colors.green,
-                      textColor: Colors.white,
+                      color: Theme.of(context).accentColor,
+                      textColor: Colors.black,
                       onPressed: () => _validateAndSave(context)),
                 )
               ],
@@ -59,7 +59,7 @@ class _NewDebtState extends State<NewDebt> {
     if (_formKey.currentState.validate()) {
       final Debt debt = Debt(nameController.text, debitorController.text,
           descController.text, double.parse(quantityController.text), 0.0);
-      //dbHelper.insertDebt(debt);
+      dbHelper.insertDebt(debt);
 
      
       widget.scaffoldKey.currentState.showSnackBar(CustomSnackBar.snackInserted);
