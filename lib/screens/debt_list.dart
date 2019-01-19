@@ -13,7 +13,6 @@ class DebtList extends StatefulWidget {
 
 class _DebtListState extends State<DebtList> {
   int count = 0;
-
   @override
   Widget build(BuildContext context) {
     count = widget.debtList.length;
@@ -45,8 +44,10 @@ class _DebtListState extends State<DebtList> {
   void _navigateToDetail(Debt debt) async {
     bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => DebtDetail(debt)));
     if (result != null && result == true) {
+      print("UPDATEAR LA LIST");
       //updateListView();
     }
   }
+  
 
 }
