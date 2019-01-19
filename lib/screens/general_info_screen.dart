@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_debt_manager/models/debt.dart';
 
 class GeneralInfo extends StatefulWidget {
-  List<Debt> debtList;
+  final List<Debt> debtList;
 
   GeneralInfo(this.debtList);
 
