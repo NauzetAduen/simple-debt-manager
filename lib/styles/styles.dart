@@ -12,9 +12,9 @@ class Styles{
 
 
    static final defaultThemeData = ThemeData(
-        primaryColor: Colors.purple,
+        primaryColor: Colors.green,
         accentColor: Colors.yellowAccent,
-        brightness: Brightness.dark
+        brightness: Brightness.light
         //primaryColorBrightness: Brightness.dark,
       );
 }
