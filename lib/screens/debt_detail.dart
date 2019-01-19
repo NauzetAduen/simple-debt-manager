@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:simple_debt_manager/components/custom_appbar.dart';
 import 'package:simple_debt_manager/models/debt.dart';
 import 'package:simple_debt_manager/styles/styles.dart';
+import 'package:simple_debt_manager/utils/database_helper.dart';
 import 'package:simple_debt_manager/utils/validator.dart';
 
 class DebtDetail extends StatefulWidget {
+  
   final Debt debt;
   DebtDetail(this.debt);
   @override
@@ -12,6 +14,7 @@ class DebtDetail extends StatefulWidget {
 }
 
 class _DebtDetailState extends State<DebtDetail> {
+  DatabaseHelper dbHelper = DatabaseHelper();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController debitorController = TextEditingController();
@@ -29,12 +32,15 @@ class _DebtDetailState extends State<DebtDetail> {
                 child: ListView(children: <Widget>[
                   buildProgressIndicator(0.75),
                   buildTextField(nameController, "Name", "${widget.debt.name}"),
-                  buildTextField(debitorController, "Debitor", "${widget.debt.debitor}"),
-                  buildTextField(descController, "Description", "${widget.debt.description}"),
-                  buildQuantityField(quantityController, "Total Quantity","${widget.debt.totalQuantity}"),
-                  buildQuantityField(paidController, "Paid Quantity","${widget.debt.paidQuantity}"),
+                  buildTextField(
+                      debitorController, "Debitor", "${widget.debt.debitor}"),
+                  buildTextField(descController, "Description",
+                      "${widget.debt.description}"),
+                  buildQuantityField(quantityController, "Total Quantity",
+                      "${widget.debt.totalQuantity}"),
+                  buildQuantityField(paidController, "Paid Quantity",
+                      "${widget.debt.paidQuantity}"),
                   buildButtons()
-
                 ]))));
   }
 
@@ -51,7 +57,8 @@ class _DebtDetailState extends State<DebtDetail> {
     );
   }
 
-  Padding buildTextField(TextEditingController editController, String field, String value) {
+  Padding buildTextField(
+      TextEditingController editController, String field, String value) {
     editController.text = value;
     return Padding(
       padding: Styles.paddingFields,
@@ -65,7 +72,8 @@ class _DebtDetailState extends State<DebtDetail> {
     );
   }
 
-  buildQuantityField(TextEditingController editController, String field, String value) {
+  buildQuantityField(
+      TextEditingController editController, String field, String value) {
     editController.text = value;
     return Padding(
       padding: Styles.paddingFields,
@@ -87,23 +95,35 @@ class _DebtDetailState extends State<DebtDetail> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () => _delete(),
               color: Colors.red,
               child: Icon(Icons.delete),
+            ),
+          ),
         ),
-          ),),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () => _update(),
               color: Colors.blue,
               child: Icon(Icons.update),
-        ),
-          ),)
-    
+            ),
+          ),
+        )
       ],
     );
   }
 
+  void _update() {
+    debugPrint("UPDATIN");
+  }
+  void _delete(){
+    debugPrint("Deletin");
+    dbHelper.deleteDebt(widget.debt.id);
+    Navigator.pop(context, true);
+  }
+
+
+ 
 }
