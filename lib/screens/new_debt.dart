@@ -4,6 +4,7 @@ import 'package:simple_debt_manager/components/custom_snackbar.dart';
 import 'package:simple_debt_manager/models/debt.dart';
 import 'package:simple_debt_manager/styles/styles.dart';
 import 'package:simple_debt_manager/utils/database_helper.dart';
+import 'package:simple_debt_manager/utils/validator.dart';
 
 class NewDebt extends StatefulWidget {
     final GlobalKey<ScaffoldState> scaffoldKey;
@@ -72,7 +73,7 @@ class _NewDebtState extends State<NewDebt> {
     return Padding(
       padding: Styles.paddingFields,
       child: TextFormField(
-          validator: _validateString,
+          validator: Validator.validateString,
           controller: editController,
           decoration: InputDecoration(
             labelText: field,
@@ -86,7 +87,7 @@ class _NewDebtState extends State<NewDebt> {
       padding: Styles.paddingFields,
       child: TextFormField(
           keyboardType: TextInputType.number,
-          validator: _validateQuantity,
+          validator: Validator.validateQuantity,
           controller: quantityController,
           decoration: InputDecoration(
             labelText: "Quantity",
@@ -95,11 +96,4 @@ class _NewDebtState extends State<NewDebt> {
     );
   }
 
-  String _validateString(String value) =>
-      value.isEmpty ? "This field can not be empty" : null;
-  String _validateQuantity(String value) {
-    if (value.isEmpty) return "Add a quantity";
-    if (double.parse(value) <= 0.0) return "Invalid quantity";
-    return null;
-  }
 }
