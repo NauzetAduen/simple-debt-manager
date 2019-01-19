@@ -4,21 +4,21 @@ import 'package:simple_debt_manager/utils/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DebtList extends StatefulWidget {
+
+  DebtList(this.debtList);
+
+  List<Debt> debtList;
   @override
   _DebtListState createState() => _DebtListState();
 }
 
 class _DebtListState extends State<DebtList> {
-  DatabaseHelper dbHelper = DatabaseHelper();
-  List<Debt> debtList;
   int count = 0;
 
   @override
   Widget build(BuildContext context) {
-    if (debtList == null) {
-      debtList = List<Debt>();
-      updateListView();
-    }
+    count = widget.debtList.length;
+    
     
     return ListView.builder(
       itemCount: count,
@@ -27,13 +27,13 @@ class _DebtListState extends State<DebtList> {
             elevation: 2.0,
             child: ListTile(
               leading: Icon(Icons.euro_symbol,
-                  color: _getStateColor(this.debtList[position].totalQuantity,
-                      this.debtList[position].paidQuantity)),
-              title: Text("${this.debtList[position].name}"),
-              subtitle: Text("${this.debtList[position].description}"),
-              trailing: Text("${this.debtList[position].totalQuantity}"),
+                  color: _getStateColor(widget.debtList[position].totalQuantity,
+                      widget.debtList[position].paidQuantity)),
+              title: Text("${widget.debtList[position].name}"),
+              subtitle: Text("${widget.debtList[position].description}"),
+              trailing: Text("${widget.debtList[position].totalQuantity}"),
               onTap: () =>
-                  debugPrint("Pressed --> ${this.debtList[position].name}"),
+                  debugPrint("Pressed --> ${widget.debtList[position].name}"),
             ));
       },
     );
@@ -45,19 +45,4 @@ class _DebtListState extends State<DebtList> {
     return Colors.orange;
   }
 
-  void updateListView() {
-    final Future<Database> dbFuture = dbHelper.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<Debt>> debtListFuture = dbHelper.getDebtList();
-      debtListFuture.then((debtList) {
-        if (this.mounted) {
-          setState(() {
-            this.debtList = debtList;
-            this.count = debtList.length;
-            debugPrint("debtlist updated");
-          });
-        }
-      });
-    });
-  }
 }

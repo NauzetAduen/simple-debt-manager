@@ -63,7 +63,8 @@ class _NewDebtState extends State<NewDebt> {
 
      
       widget.scaffoldKey.currentState.showSnackBar(CustomSnackBar.snackInserted);
-      Navigator.pop(context);
+      //We pass an extra param to update our listview
+      Navigator.pop(context, true);
     }
   }
 
