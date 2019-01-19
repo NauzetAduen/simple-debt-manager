@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:simple_debt_manager/models/debt.dart';
-import 'package:simple_debt_manager/utils/database_helper.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:simple_debt_manager/screens/debt_detail.dart';
 
 class DebtList extends StatefulWidget {
 
   DebtList(this.debtList);
 
-  List<Debt> debtList;
+  final List<Debt> debtList;
   @override
   _DebtListState createState() => _DebtListState();
 }
@@ -32,8 +31,7 @@ class _DebtListState extends State<DebtList> {
               title: Text("${widget.debtList[position].name}"),
               subtitle: Text("${widget.debtList[position].description}"),
               trailing: Text("${widget.debtList[position].totalQuantity}"),
-              onTap: () =>
-                  debugPrint("Pressed --> ${widget.debtList[position].name}"),
+              onTap: () => _navigateToDetail(widget.debtList[position])
             ));
       },
     );
@@ -43,6 +41,12 @@ class _DebtListState extends State<DebtList> {
     if (paid == 0) return Colors.red;
     if (total == paid) return Colors.green;
     return Colors.orange;
+  }
+  void _navigateToDetail(Debt debt) async {
+    bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => DebtDetail(debt)));
+    if (result != null && result == true) {
+      //updateListView();
+    }
   }
 
 }
