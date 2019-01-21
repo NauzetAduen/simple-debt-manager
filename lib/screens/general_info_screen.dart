@@ -13,20 +13,21 @@ class GeneralInfo extends StatefulWidget {
 class _GeneralInfoState extends State<GeneralInfo> {
   double totalAmount = 0.0;
   double totalAmountPaid = 0.0;
-  double percent = 0.0;
+  double percent = 0.000;
   String percentString = "0.0000";
   bool first = true;
   @override
   Widget build(BuildContext context) {
-    if (first){
+    if (first) {
       debugPrint("Antes de getTotals: $totalAmount");
-       _getTotals();
-       debugPrint("Después de getTotals: $totalAmount");
+      _getTotals();
+      debugPrint("Después de getTotals: $totalAmount");
       first = !first;
     }
-   
+
     return Center(
-      child: Container(child: Column(
+      child: Container(
+          child: Column(
         children: <Widget>[
           Text("Total : ${widget.debtList.length}"),
           Text("total : $totalAmount"),
@@ -38,11 +39,16 @@ class _GeneralInfoState extends State<GeneralInfo> {
   }
 
   void _getTotals() {
-    for (var debt in widget.debtList) {
-      totalAmount += debt.totalQuantity;
-      totalAmountPaid += debt.paidQuantity;
+    if (widget.debtList.isNotEmpty) {
+      for (var debt in widget.debtList) {
+        totalAmount += debt.totalQuantity;
+        totalAmountPaid += debt.paidQuantity;
+      }
+      percent = totalAmountPaid / totalAmount;
     }
-    percent = totalAmountPaid/totalAmount;
+    else percent = 0.0;
+    
     percentString = percent.toStringAsFixed(2);
+    
   }
 }
