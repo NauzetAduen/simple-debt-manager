@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:simple_debt_manager/components/custom_snackbar.dart';
 import 'package:simple_debt_manager/models/debt.dart';
 import 'package:simple_debt_manager/screens/debt_detail.dart';
+import 'package:simple_debt_manager/utils/debt_action_result.dart';
 
 class DebtList extends StatefulWidget {
 
@@ -42,11 +44,19 @@ class _DebtListState extends State<DebtList> {
     return Colors.orange;
   }
   void _navigateToDetail(Debt debt) async {
-    bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => DebtDetail(debt)));
-    if (result != null && result == true) {
-      print("UPDATEAR LA LIST");
-      //updateListView();
+    DebtActionResult result = await Navigator.push(context, MaterialPageRoute(builder: (context) => DebtDetail(debt)));
+    if(result != null) {
+      if(result.action == 2) setState(() {
+        widget.debtList.removeWhere( (d) => d.id == result.debtId );
+        Scaffold.of(context).showSnackBar(CustomSnackBar("Deleted debt ${result.updateDebt.name}").getSnack());
+      });
+      if(result.action == 1) setState(() {
+        widget.debtList.removeWhere( (d) => d.id == result.debtId);
+        widget.debtList.insert(0, result.updateDebt);
+        Scaffold.of(context).showSnackBar(CustomSnackBar("Updated debt ${result.updateDebt.name}").getSnack());
+      });
     }
+ 
   }
   
 
