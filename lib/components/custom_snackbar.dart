@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomSnackBar{
+  CustomSnackBar(this.message);
+  final String message;
 
-  static final snackInserted = SnackBar(content: Text("New Debt inserted"),duration: Duration(seconds: 3),);
+
+  SnackBar getSnack(){
+    return SnackBar(content: Text("$message"),duration: Duration(seconds: 3),);
+  }
+
+  
 }
