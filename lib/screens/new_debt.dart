@@ -63,7 +63,7 @@ class _NewDebtState extends State<NewDebt> {
       dbHelper.insertDebt(debt);
 
      
-      widget.scaffoldKey.currentState.showSnackBar(CustomSnackBar.snackInserted);
+      widget.scaffoldKey.currentState.showSnackBar(CustomSnackBar("New Debt Added").getSnack());
       //We pass an extra param to update our listview
       Navigator.pop(context, true);
     }
