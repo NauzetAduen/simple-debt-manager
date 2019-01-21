@@ -14,6 +14,7 @@ class _GeneralInfoState extends State<GeneralInfo> {
   double totalAmount = 0.0;
   double totalAmountPaid = 0.0;
   double percent = 0.0;
+  String percentString = "0.0000";
   bool first = true;
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class _GeneralInfoState extends State<GeneralInfo> {
           Text("Total : ${widget.debtList.length}"),
           Text("total : $totalAmount"),
           Text("Paid : $totalAmountPaid"),
-          Text("Percent : $percent %"),
+          Text("Percent : $percentString %"),
         ],
       )),
     );
@@ -38,10 +39,10 @@ class _GeneralInfoState extends State<GeneralInfo> {
 
   void _getTotals() {
     for (var debt in widget.debtList) {
-      debugPrint("total : ${debt.totalQuantity}");
       totalAmount += debt.totalQuantity;
       totalAmountPaid += debt.paidQuantity;
     }
     percent = totalAmountPaid/totalAmount;
+    percentString = percent.toStringAsFixed(2);
   }
 }
