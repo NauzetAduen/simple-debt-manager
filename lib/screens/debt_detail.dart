@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:simple_debt_manager/components/custom_appbar.dart';
 import 'package:simple_debt_manager/models/debt.dart';
+import 'package:simple_debt_manager/models/debt_action_result.dart';
 import 'package:simple_debt_manager/styles/styles.dart';
 import 'package:simple_debt_manager/utils/database_helper.dart';
-import 'package:simple_debt_manager/utils/debt_action_result.dart';
 import 'package:simple_debt_manager/utils/validator.dart';
 
 class DebtDetail extends StatefulWidget {
@@ -22,6 +22,7 @@ class _DebtDetailState extends State<DebtDetail> {
   final TextEditingController descController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
   final TextEditingController paidController = TextEditingController();
+  double percent = 0.0;
 
  
   bool first = true;
@@ -32,7 +33,7 @@ class _DebtDetailState extends State<DebtDetail> {
       _fillValues();
       first = false;
     }
-    double percent = double.parse(paidController.text) /
+    percent = double.parse(paidController.text) /
         double.parse(quantityController.text);
     return Scaffold(
         appBar: CustomAppBar(Text("${widget.debt.name}")),
@@ -55,14 +56,24 @@ class _DebtDetailState extends State<DebtDetail> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        child: LinearProgressIndicator(
-          value: value,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-        ),
         height: 30.0,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: 30.0,
+              child:  LinearProgressIndicator(
+                value: value,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                ),
+            ),
+            Center(child:_percentToText()),
+          ]),
+        
       ),
     );
   }
+
+  Text _percentToText() => Text("${(percent*100).round().toString()} %", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),);
 
   Padding buildTextField(TextEditingController editController, String field) {
     return Padding(
@@ -112,27 +123,27 @@ class _DebtDetailState extends State<DebtDetail> {
 
   buildButtons() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: FloatingActionButton(
+              
               onPressed: () => _delete(),
-              color: Colors.red,
-              child: Icon(Icons.delete),
+              child: Icon(Icons.delete, color: Colors.white,),
+              backgroundColor: Colors.red,
+              heroTag: "TagDelete",
             ),
           ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: FloatingActionButton(
               onPressed: () => _update(),
-              color: Colors.blue,
-              child: Icon(Icons.update),
+              backgroundColor: Colors.blue,
+              child: Icon(Icons.check, color: Colors.white,),
+              heroTag: "TagUpdate",
             ),
           ),
-        )
       ],
     );
   }
