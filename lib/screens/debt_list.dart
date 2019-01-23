@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simple_debt_manager/components/custom_snackbar.dart';
 import 'package:simple_debt_manager/models/debt.dart';
+import 'package:simple_debt_manager/models/debt_action_result.dart';
 import 'package:simple_debt_manager/screens/debt_detail.dart';
-import 'package:simple_debt_manager/utils/debt_action_result.dart';
 
 class DebtList extends StatefulWidget {
 
