@@ -6,8 +6,6 @@ class CustomSnackBar{
 
 
   SnackBar getSnack(){
-    return SnackBar(content: Text("$message"),duration: Duration(seconds: 3),);
+    return SnackBar(content: Text("$message",textAlign: TextAlign.center),duration: Duration(milliseconds: 777),);
   }
-
-  
 }
