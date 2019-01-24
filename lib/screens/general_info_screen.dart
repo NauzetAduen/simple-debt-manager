@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:simple_debt_manager/components/custom_pie_chart.dart';
 import 'package:simple_debt_manager/models/debt.dart';
+import 'package:simple_debt_manager/models/graph_data_holder.dart';
+import 'package:simple_debt_manager/models/linear_amount.dart';
 
 class GeneralInfo extends StatefulWidget {
   final List<Debt> debtList;
@@ -11,28 +14,32 @@ class GeneralInfo extends StatefulWidget {
 }
 
 class _GeneralInfoState extends State<GeneralInfo> {
-  double totalAmount = 0.0;
-  double totalAmountPaid = 0.0;
-  double percent = 0.000;
+  GraphDataHolder dataHolder = GraphDataHolder();
   String percentString = "0.0000";
   bool first = true;
   @override
   Widget build(BuildContext context) {
     if (first) {
-      debugPrint("Antes de getTotals: $totalAmount");
       _getTotals();
-      debugPrint("Después de getTotals: $totalAmount");
       first = !first;
     }
 
     return Center(
       child: Container(
-          child: Column(
+          child: ListView(
         children: <Widget>[
-          Text("Total : ${widget.debtList.length}"),
-          Text("total : $totalAmount"),
-          Text("Paid : $totalAmountPaid"),
+          Text("Total Debts : ${widget.debtList.length}"),
+          Text("Total Fully PAid Debts : ${dataHolder.totalDebtFullyPaid}"),
+          Text("Total Partialy PAid Debts : ${dataHolder.totalDebtPatialyPaid}"),
+          Text("Total Zero PAid Debts : ${dataHolder.totalDebtZeroPaid}"),
+
+          Text("total : ${dataHolder.totalAmount}"),
+          Text("Paid : ${dataHolder.totalAmountPaid}"),
           Text("Percent : $percentString %"),
+          Container(
+            width: 400,
+            height: 400,
+            child : CustomPieChart(dataHolder.toSeries()))
         ],
       )),
     );
@@ -41,14 +48,27 @@ class _GeneralInfoState extends State<GeneralInfo> {
   void _getTotals() {
     if (widget.debtList.isNotEmpty) {
       for (var debt in widget.debtList) {
-        totalAmount += debt.totalQuantity;
-        totalAmountPaid += debt.paidQuantity;
+        dataHolder.addTotalAmount(debt.totalQuantity);
+        dataHolder.addTotalAmountPaid(debt.paidQuantity);
+
+        if (debt.paidQuantity == 0) dataHolder.incrementTotalZeroyPaid();
+        else if (debt.paidQuantity == debt.totalQuantity) dataHolder.incrementTotalFullyPaid();
+        else dataHolder.incrementTotalPartialyPaid();
+
       }
-      percent = totalAmountPaid / totalAmount;
+      dataHolder.percent = 100 *(dataHolder.totalAmountPaid / dataHolder.totalAmount);
     }
-    else percent = 0.0;
+    else dataHolder.percent = 0.0;
     
-    percentString = percent.toStringAsFixed(2);
+    percentString = dataHolder.percent.toStringAsFixed(2);
+
+    dataHolder.addSerie(LinearAmount("Paid",dataHolder.totalAmountPaid));
+    dataHolder.addSerie(LinearAmount("Unpaid",dataHolder.totalAmount - dataHolder.totalAmountPaid));
+
+
     
   }
+
 }
+
+
