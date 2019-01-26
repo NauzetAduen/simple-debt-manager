@@ -139,7 +139,7 @@ class _DebtDetailState extends State<DebtDetail> {
                   onPressed: () => _update(),
                   backgroundColor: Colors.blue,
                   child: Icon(Icons.check, color: Colors.white,),
-                  heroTag: "TagUpdate",
+                  //heroTag: "TagUpdate",
                 ),
               ),
           ],
