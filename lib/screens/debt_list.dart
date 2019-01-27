@@ -45,18 +45,23 @@ class _DebtListState extends State<DebtList> {
   }
   void _navigateToDetail(Debt debt) async {
     DebtActionResult result = await Navigator.push(context, MaterialPageRoute(builder: (context) => DebtDetail(debt)));
+    actionResultControl(result);
+ 
+  }
+
+  void actionResultControl(DebtActionResult result) {
     if(result != null) {
       if(result.action == 2) setState(() {
         widget.debtList.removeWhere( (d) => d.id == result.debtId );
         Scaffold.of(context).showSnackBar(CustomSnackBar("Deleted debt ${result.updateDebt.name}").getSnack());
       });
       if(result.action == 1) setState(() {
-        widget.debtList.removeWhere( (d) => d.id == result.debtId);
-        widget.debtList.insert(0, result.updateDebt);
+        int indexFound = widget.debtList.indexWhere((d) => d.id == result.debtId);
+        widget.debtList.removeAt(indexFound);
+        widget.debtList.insert(indexFound, result.updateDebt);
         Scaffold.of(context).showSnackBar(CustomSnackBar("Updated debt ${result.updateDebt.name}").getSnack());
       });
     }
- 
   }
   
 
