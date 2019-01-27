@@ -10,6 +10,10 @@ class Styles{
 
    static final paddingFields = const EdgeInsets.symmetric(vertical: 10.0);
 
+   static final paddingProggressIndicator = const EdgeInsets.all(12.0);
+   static final progressIndicatorHeight = 30.0;
+   static final progressIndicatorStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
+
 
    static final defaultThemeData = ThemeData(
         primaryColor: Colors.green,
