@@ -19,8 +19,9 @@ See a general info tab with a resume.
 - [charts_flutter](https://pub.dartlang.org/packages/charts_flutter)
 - [flutter_launcher_icons](https://pub.dartlang.org/packages/flutter_launcher_icons)
 
-
-
 ## Future
 - Filter the list by users or quantity
 - Add an icon to the app
+
+## Known bugs
+- DataHolder not updating properly when a new debt is added
