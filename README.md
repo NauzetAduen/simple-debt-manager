@@ -1,6 +1,7 @@
 # simple_debt_manager
 
 Small project to learn flutter where you can manage your debts.
+This project started as a joke. Debts are onesided.
 
 ## Description
 
@@ -8,11 +9,10 @@ Create debts and store them in a small sqlite database.
 Edit/delete those debts.
 See a general info tab with a resume.
 
-## Work in progress
+## Plugins used
+- [sqflite](https://pub.dartlang.org/packages/sqflite)
+- [charts_flutter](https://pub.dartlang.org/packages/charts_flutter)
 
-- Database
-- General tab
-- Detailed screen
 
 ## Future
-- Graphics in the general tab
+- Filter the list by users or quantity
