@@ -4,6 +4,7 @@ import 'package:simple_debt_manager/models/debt.dart';
 import 'package:simple_debt_manager/models/graph_data_holder.dart';
 import 'package:simple_debt_manager/models/linear_amount.dart';
 import 'package:simple_debt_manager/models/linear_type.dart';
+import 'package:simple_debt_manager/styles/styles.dart';
 
 class GeneralInfo extends StatefulWidget {
   final List<Debt> debtList;
@@ -29,8 +30,8 @@ class _GeneralInfoState extends State<GeneralInfo> {
       children: <Widget>[
         buildTitle("Amounts"),
         buildTotalPercentPie(),
-        Divider(color: Colors.redAccent),
-        buildTitle("CACA"),
+        Styles.divider,
+        buildTitle("Types"),
         buildTypesInfo(),
 
       ],
@@ -39,12 +40,12 @@ class _GeneralInfoState extends State<GeneralInfo> {
 
   Container buildTypesInfo() {
     return Container(
-      child: Row(
-        children: <Widget>[
-          buildTypesData(),
-          buildTypesPie(),
-        ],
-      ),
+        child: Row(
+          children: <Widget>[
+            buildTypesData(),
+            buildTypesPie(),
+          ],
+        ),
     );
   }
 
@@ -52,6 +53,7 @@ class _GeneralInfoState extends State<GeneralInfo> {
     return Container(
       width: 100,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Text("Total: ${widget.debtList.length}"),
           Text("Full : ${dataHolder.totalDebtFullyPaid}"),
@@ -64,8 +66,8 @@ class _GeneralInfoState extends State<GeneralInfo> {
 
   Container buildTypesPie() {
     return Container(
-        width: 300,
-        height: 150,
+        width: Styles.pieWidth,
+        height: Styles.pideHeight,
         child: CustomPieChart(dataHolder.totalTypesSeries()));
   }
 
@@ -73,15 +75,16 @@ class _GeneralInfoState extends State<GeneralInfo> {
     return Row(
       children: <Widget>[
         Container(
-            width: 300,
-            height: 150,
+            width: Styles.pieWidth,
+            height: Styles.pideHeight,
             child: CustomPieChart(dataHolder.totalAmountSeries())),
         Column(children: <Widget>[
           Text(_getPercentPaid(),
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
+              style: Styles.percentStyle),
           Text("Paid: ${dataHolder.totalAmountPaid}"),
           Text("Unpaid: ${dataHolder.totalAmount - dataHolder.totalAmountPaid}")
-        ])
+        ],
+        crossAxisAlignment: CrossAxisAlignment.end,)
       ],
     );
   }
@@ -125,9 +128,11 @@ class _GeneralInfoState extends State<GeneralInfo> {
     return "${percent.round().toInt()} %";
   }
 
-  Text buildTitle(String value) => Text(
+  Padding buildTitle(String value) => Padding(child: Text(
         value.toUpperCase(),
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
-      );
+        style: Styles.pieTitleStyle
+      ), padding: Styles.pieTitlePadding);
+
+
 }
