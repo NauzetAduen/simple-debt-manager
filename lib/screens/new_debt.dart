@@ -27,6 +27,7 @@ class _NewDebtState extends State<NewDebt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         appBar: CustomAppBar(Text("New Debt")),
         body: Form(
           key: _formKey,
@@ -40,15 +41,13 @@ class _NewDebtState extends State<NewDebt> {
                 buildQuantityField(),
                 Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: RaisedButton(
-                      padding: EdgeInsets.all(30.0),
-                      child: Text(
-                        "Create",
-                        style: TextStyle(fontSize: 25.0),
-                      ),
-                      color: Theme.of(context).accentColor,
-                      textColor: Colors.black,
-                      onPressed: () => _validateAndSave(context)),
+                  child: FloatingActionButton(
+                    onPressed: () => _validateAndSave(context),
+                    child: Icon(Icons.check), ),
+                      
+                     // color: Theme.of(context).accentColor,
+                      //textColor: Colors.black,
+                      
                 )
               ],
             ),
