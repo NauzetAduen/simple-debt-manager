@@ -35,7 +35,7 @@ class _DebtDetailState extends State<DebtDetail> {
     }
     percent = _getPercent();
         return Scaffold(
-            appBar: CustomAppBar(Text("${widget.debt.name} - ${widget.debt.id}")),
+            appBar: CustomAppBar(Text("Editing ${widget.debt.name}")),
             body: Form(
                 key: _formKey,
                 child: Padding(
@@ -53,13 +53,13 @@ class _DebtDetailState extends State<DebtDetail> {
     
       Widget buildProgressIndicator(value) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: Styles.paddingProggressIndicator,
           child: Container(
-            height: 30.0,
+            height: Styles.progressIndicatorHeight,
             child: Stack(
               children: <Widget>[
                 Container(
-                  height: 30.0,
+                  height: Styles.progressIndicatorHeight,
                   child:  LinearProgressIndicator(
                     value: value,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
@@ -72,7 +72,7 @@ class _DebtDetailState extends State<DebtDetail> {
         );
       }
     
-      Text _percentToText() => Text("${(percent*100).round().toString()} %", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),);
+      Text _percentToText() => Text("${(percent*100).round().toString()} %", style: Styles.progressIndicatorStyle);
     
       Padding buildTextField(TextEditingController editController, String field) {
         return Padding(
@@ -138,7 +138,7 @@ class _DebtDetailState extends State<DebtDetail> {
                 child: FloatingActionButton(
                   onPressed: () => _update(),
                   backgroundColor: Colors.blue,
-                  child: Icon(Icons.check, color: Colors.white,),
+                  child: Icon(Icons.update, color: Colors.white,),
                   //heroTag: "TagUpdate",
                 ),
               ),
