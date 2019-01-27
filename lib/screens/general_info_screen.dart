@@ -121,8 +121,6 @@ class _GeneralInfoState extends State<GeneralInfo> {
 
   String _getPercentPaid() {
     if (dataHolder.totalAmount == 0) return "0 %";
-    print(dataHolder.totalAmountPaid);
-    print(dataHolder.totalAmount);
     double percent = 100 * dataHolder.totalAmountPaid / dataHolder.totalAmount;
     return "${percent.round().toInt()} %";
   }

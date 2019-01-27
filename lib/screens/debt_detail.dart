@@ -146,8 +146,7 @@ class _DebtDetailState extends State<DebtDetail> {
         );
       }
     
-      void _update() async {
-        print(paidController.text);
+      void _update() {
         if (_formKey.currentState.validate()) {
           final Debt updatedDebt = Debt.withID(
               widget.debt.id,
@@ -158,9 +157,7 @@ class _DebtDetailState extends State<DebtDetail> {
               double.parse(paidController.text));
           DebtActionResult result = DebtActionResult(
               action: 1, debtId: widget.debt.id, updateDebt: updatedDebt);
-          int a = await dbHelper.updateDebt(updatedDebt);
-          print(a);
-          print("updated id: ${updatedDebt.id}");
+          dbHelper.updateDebt(updatedDebt);
           Navigator.pop(context, result);
         }
       }
@@ -168,7 +165,6 @@ class _DebtDetailState extends State<DebtDetail> {
       void _delete() {
         DebtActionResult result =
             DebtActionResult(action: 2, debtId: widget.debt.id, updateDebt: widget.debt);
-        debugPrint("Deletin ${widget.debt.id}");
         dbHelper.deleteDebt(widget.debt.id);
         Navigator.pop(context, result);
       }
