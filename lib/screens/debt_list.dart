@@ -3,6 +3,7 @@ import 'package:simple_debt_manager/components/custom_snackbar.dart';
 import 'package:simple_debt_manager/models/debt.dart';
 import 'package:simple_debt_manager/models/debt_action_result.dart';
 import 'package:simple_debt_manager/screens/debt_detail.dart';
+import 'package:simple_debt_manager/styles/styles.dart';
 
 class DebtList extends StatefulWidget {
 
@@ -29,9 +30,9 @@ class _DebtListState extends State<DebtList> {
               leading: Icon(Icons.euro_symbol,
                   color: _getStateColor(widget.debtList[position].totalQuantity,
                       widget.debtList[position].paidQuantity)),
-              title: Text("${widget.debtList[position].name}"),
+              title: Text("${widget.debtList[position].name}", style: Styles.titleStyle,),
               subtitle: Text("${widget.debtList[position].description}"),
-              trailing: Text("${widget.debtList[position].totalQuantity}"),
+              trailing: Text("${widget.debtList[position].totalQuantity}",style:TextStyle(fontSize: 20.0)),
               onTap: () => _navigateToDetail(widget.debtList[position])
             ));
       },

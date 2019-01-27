@@ -14,6 +14,8 @@ class Styles{
    static final progressIndicatorHeight = 30.0;
    static final progressIndicatorStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold);
 
+   static final titleStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+
 
    static final defaultThemeData = ThemeData(
         primaryColor: Colors.green,
