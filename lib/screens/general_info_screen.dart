@@ -92,9 +92,8 @@ class _GeneralInfoState extends State<GeneralInfo> {
 
   String _getPercentPaid() {
     if (widget.dataHolder.totalAmount == 0 || widget.dataHolder.totalAmountPaid == 0) return "0 %";
-    //double percent = 100 * widget.dataHolder.totalAmountPaid / widget.dataHolder.totalAmount;
-    //return "${percent.round().toInt()} %";
-    return "aaa";
+    double percent = 100 * widget.dataHolder.totalAmountPaid / widget.dataHolder.totalAmount;
+    return "${percent.round().toInt()} %";
   }
 
   Padding buildTitle(String value) => Padding(child: Text(
