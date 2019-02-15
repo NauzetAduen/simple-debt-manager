@@ -23,7 +23,6 @@ Debts are onesided.
 <img src="https://raw.githubusercontent.com/NauzetAduen/simple-debt-manager/master/screenshots/6%20-%20editing_debt.png" width="135">
 <img src="https://raw.githubusercontent.com/NauzetAduen/simple-debt-manager/master/screenshots/7%20-%20editing_partial_debt.png" width="135">
 <br>
-https://raw.githubusercontent.com/NauzetAduen/simple-debt-manager/master/screenshots/8%20-%20main_screen_colors.png
 
 </div>
 
