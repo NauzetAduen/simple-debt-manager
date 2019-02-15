@@ -10,7 +10,7 @@ Debts are onesided.
 
 Create debts and store them in a small sqlite database.
 
-![Main Screen](screenshots/1 - main_screen.png)
+![Main Screen](https://github.com/NauzetAduen/simple-debt-manager/blob/master/screenshots/1%20-%20main_screen.png)
 
 Edit/delete those debts.
 
