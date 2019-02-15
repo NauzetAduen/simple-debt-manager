@@ -25,9 +25,9 @@ class Styles{
 
 
    static final defaultThemeData = ThemeData(
-        primaryColor: Colors.pink,
-        accentColor: Colors.yellowAccent,
-        brightness: Brightness.light
+        primaryColor: Color(0xff009fb7),
+        accentColor: Color(0xffceff1a),
+        brightness: Brightness.dark
         //primaryColorBrightness: Brightness.dark,
       );
 }
