@@ -57,6 +57,3 @@ Debts will be listed colored by "state". Fully paid, not paid or partialy paid.
 
 ## Future
 - Filter the list by users or quantity
-
-## Known bugs
-- DataHolder not updating properly when a new debt is added

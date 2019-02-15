@@ -8,20 +8,19 @@ import 'package:simple_debt_manager/styles/styles.dart';
 
 class GeneralInfo extends StatefulWidget {
   final List<Debt> debtList;
+  final GraphDataHolder dataHolder;
 
-  GeneralInfo(this.debtList);
+  GeneralInfo(this.debtList, this.dataHolder);
 
   @override
   _GeneralInfoState createState() => _GeneralInfoState();
 }
 
 class _GeneralInfoState extends State<GeneralInfo> {
-  GraphDataHolder dataHolder = GraphDataHolder();
   bool first = true;
   @override
   Widget build(BuildContext context) {
     if (first) {
-      _getTotals();
       first = !first;
     }
     if (widget.debtList.isEmpty) return Center(child: Text("Nothing to show, try adding debts..."),);
@@ -56,9 +55,9 @@ class _GeneralInfoState extends State<GeneralInfo> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Text("Total: ${widget.debtList.length}"),
-          Text("Full : ${dataHolder.totalDebtFullyPaid}"),
-          Text("Partial : ${dataHolder.totalDebtPatialyPaid}"),
-          Text("Non : ${dataHolder.totalDebtZeroPaid}"),
+          Text("Full : ${widget.dataHolder.totalDebtFullyPaid}"),
+          Text("Partial : ${widget.dataHolder.totalDebtPatialyPaid}"),
+          Text("Non : ${widget.dataHolder.totalDebtZeroPaid}"),
         ],
       ),
     );
@@ -68,7 +67,7 @@ class _GeneralInfoState extends State<GeneralInfo> {
     return Container(
         width: Styles.pieWidth,
         height: Styles.pideHeight,
-        child: CustomPieChart(dataHolder.totalTypesSeries()));
+        child: CustomPieChart(widget.dataHolder.totalTypesSeries()));
   }
 
   Row buildTotalPercentPie() {
@@ -77,55 +76,25 @@ class _GeneralInfoState extends State<GeneralInfo> {
         Container(
             width: Styles.pieWidth,
             height: Styles.pideHeight,
-            child: CustomPieChart(dataHolder.totalAmountSeries())),
+            child: CustomPieChart(widget.dataHolder.totalAmountSeries())),
         Column(children: <Widget>[
           Text(_getPercentPaid(),
               style: Styles.percentStyle),
-          Text("Paid: ${dataHolder.totalAmountPaid}"),
-          Text("Unpaid: ${dataHolder.totalAmount - dataHolder.totalAmountPaid}")
+          Text("Paid: ${widget.dataHolder.totalAmountPaid}"),
+          Text("Unpaid: ${widget.dataHolder.totalAmount - widget.dataHolder.totalAmountPaid}")
         ],
         crossAxisAlignment: CrossAxisAlignment.end,)
       ],
     );
   }
 
-  void _getTotals() {
-    if (widget.debtList.isNotEmpty) {
-      for (var debt in widget.debtList) {
-        dataHolder.addTotalAmount(debt.totalQuantity);
-        dataHolder.addTotalAmountPaid(debt.paidQuantity);
-
-        if (debt.paidQuantity == 0)
-          dataHolder.incrementTotalZeroyPaid();
-        else if (debt.paidQuantity == debt.totalQuantity)
-          dataHolder.incrementTotalFullyPaid();
-        else
-          dataHolder.incrementTotalPartialyPaid();
-      }
-      dataHolder.percent =
-          100 * (dataHolder.totalAmountPaid / dataHolder.totalAmount);
-    } else
-      dataHolder.percent = 0.0;
-
-    dataHolder.addSerieTotalAmount(LinearAmount("${dataHolder.totalAmountPaid}",
-        dataHolder.totalAmountPaid, Colors.pinkAccent));
-    dataHolder.addSerieTotalAmount(LinearAmount(
-        "${(dataHolder.totalAmount - dataHolder.totalAmountPaid)}",
-        dataHolder.totalAmount - dataHolder.totalAmountPaid,
-        Colors.blueGrey));
-
-    dataHolder.addSerieTotalTypes(
-        LinearType("Fully", dataHolder.totalDebtFullyPaid, Colors.orange));
-    dataHolder.addSerieTotalTypes(
-        LinearType("Partial", dataHolder.totalDebtPatialyPaid, Colors.green));
-    dataHolder.addSerieTotalTypes(
-        LinearType("Zero", dataHolder.totalDebtZeroPaid, Colors.blue));
-  }
+ 
 
   String _getPercentPaid() {
-    if (dataHolder.totalAmount == 0 || dataHolder.totalAmountPaid == 0) return "0 %";
-    double percent = 100 * dataHolder.totalAmountPaid / dataHolder.totalAmount;
-    return "${percent.round().toInt()} %";
+    if (widget.dataHolder.totalAmount == 0 || widget.dataHolder.totalAmountPaid == 0) return "0 %";
+    //double percent = 100 * widget.dataHolder.totalAmountPaid / widget.dataHolder.totalAmount;
+    //return "${percent.round().toInt()} %";
+    return "aaa";
   }
 
   Padding buildTitle(String value) => Padding(child: Text(
